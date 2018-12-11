@@ -1,4 +1,4 @@
--- !DATE! Funnel owoxbi sesions one day process 1
+-- !DATE! Funnel owoxbi sesions one day process
 SELECT
 '!DATE!' AS date,
   source,
@@ -17,7 +17,8 @@ SELECT
   last_click_attribution_value_online AS last_click_attribution_value_online,
   _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online AS _funnel_based_attribution_value_online,
   _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value AS _funnel_based_attribution_value,
-
+  
+  
 FROM (
   SELECT
     source AS source,
@@ -29,27 +30,27 @@ FROM (
     sessions_count,
     transactions_count,
     cost,
-    last_click_attribution_value_online AS last_click_attribution_value_online,
-    last_click_attribution_value_online_summary AS last_click_attribution_value_online_summary,
-    last_click_attribution_attributed_revenue_online AS last_click_attribution_attributed_revenue_online,
-    last_click_attribution_attributed_revenue_online_summary AS last_click_attribution_attributed_revenue_online_summary,
+    _last_click_attribution_attributed_revenue_online AS _last_click_attribution_attributed_revenue_online,
+    _last_click_attribution_attributed_revenue_online_summary AS _last_click_attribution_attributed_revenue_online_summary,
+    _last_click_attribution_value_online AS _last_click_attribution_value_online,
+    _last_click_attribution_value_online_summary AS _last_click_attribution_value_online_summary,
     sessions_count_summary,
     transactions_count_summary,
     cost_summary
     --Funnel (owox sess)
     ,
-    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online,
-    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary,
-    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value,
-    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary,
     _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online,
     _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_summary AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_summary,
     _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue,
     _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_summary AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_summary,
-    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_change,
-    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_change,
+    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online,
+    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary,
+    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value,
+    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary,
     _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_change,
-    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_change
+    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_change,
+    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_change,
+    _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_change
   FROM (
     SELECT
       COALESCE(t1.source, t2.source) AS source,
@@ -59,10 +60,10 @@ FROM (
       COALESCE(t1.device, t2.device) AS device,
       COALESCE(t1.region, t2.region) AS region,
       IFNULL(t1.cost, 0) AS cost,
-      t1.last_click_attribution_value_online AS last_click_attribution_value_online,
-      FIRST_VALUE(t1.last_click_attribution_value_online_summary) OVER() AS last_click_attribution_value_online_summary,
-      t1.last_click_attribution_attributed_revenue_online AS last_click_attribution_attributed_revenue_online,
-      FIRST_VALUE(t1.last_click_attribution_attributed_revenue_online_summary) OVER() AS last_click_attribution_attributed_revenue_online_summary,
+      t1._last_click_attribution_attributed_revenue_online AS _last_click_attribution_attributed_revenue_online,
+      FIRST_VALUE(t1._last_click_attribution_attributed_revenue_online_summary) OVER() AS _last_click_attribution_attributed_revenue_online_summary,
+      t1._last_click_attribution_value_online AS _last_click_attribution_value_online,
+      FIRST_VALUE(t1._last_click_attribution_value_online_summary) OVER() AS _last_click_attribution_value_online_summary,
       t1.cost_summary AS cost_summary,
       t1.sessions_count AS sessions_count,
       FIRST_VALUE(t1.sessions_count_summary) OVER() AS sessions_count_summary,
@@ -70,18 +71,18 @@ FROM (
       FIRST_VALUE(t1.transactions_count_summary) OVER() AS transactions_count_summary
       --Funnel (owox sess)
       ,
-      t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online,
-      FIRST_VALUE(t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary,
-      t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value,
-      FIRST_VALUE(t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary,
       t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online,
       FIRST_VALUE(t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_summary) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_summary,
       t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue,
       FIRST_VALUE(t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_summary) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_summary,
-      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online - t1.last_click_attribution_value_online) / t1.last_click_attribution_value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_change,
-      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value - t1.last_click_attribution_value) / t1.last_click_attribution_value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_change,
-      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online - t1.last_click_attribution_attributed_revenue_online) / t1.last_click_attribution_attributed_revenue_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_change,
-      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue - t1.last_click_attribution_attributed_revenue) / t1.last_click_attribution_attributed_revenue AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_change
+      t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online,
+      FIRST_VALUE(t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary,
+      t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value,
+      FIRST_VALUE(t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary,
+      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online - t1._last_click_attribution_attributed_revenue_online) / t1._last_click_attribution_attributed_revenue_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_change,
+      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue - t1._last_click_attribution_attributed_revenue) / t1._last_click_attribution_attributed_revenue AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_change,
+      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online - t1._last_click_attribution_value_online) / t1._last_click_attribution_value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_change,
+      (t2._3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value - t1._last_click_attribution_value) / t1._last_click_attribution_value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_change
     FROM (
       SELECT
         *
@@ -93,14 +94,14 @@ FROM (
           keyword,
           device,
           region,
-          value_online AS last_click_attribution_value_online,
-          value AS last_click_attribution_value,
-          SUM(last_click_attribution_value_online) OVER() AS last_click_attribution_value_online_summary,
-          SUM(last_click_attribution_value) OVER() AS last_click_attribution_value_summary,
-          attributed_revenue_online AS last_click_attribution_attributed_revenue_online,
-          attributed_revenue AS last_click_attribution_attributed_revenue,
-          SUM(last_click_attribution_attributed_revenue_online) OVER() AS last_click_attribution_attributed_revenue_online_summary,
-          SUM(last_click_attribution_attributed_revenue) OVER() AS last_click_attribution_attributed_revenue_summary,
+          attributed_revenue_online AS _last_click_attribution_attributed_revenue_online,
+          attributed_revenue AS _last_click_attribution_attributed_revenue,
+          SUM(_last_click_attribution_attributed_revenue_online) OVER() AS _last_click_attribution_attributed_revenue_online_summary,
+          SUM(_last_click_attribution_attributed_revenue) OVER() AS _last_click_attribution_attributed_revenue_summary,
+          value_online AS _last_click_attribution_value_online,
+          value AS _last_click_attribution_value,
+          SUM(_last_click_attribution_value_online) OVER() AS _last_click_attribution_value_online_summary,
+          SUM(_last_click_attribution_value) OVER() AS _last_click_attribution_value_summary,
           IFNULL(cost, 0) AS cost,
           SUM(cost) OVER() AS cost_summary,
           sessions_count,
@@ -125,6 +126,7 @@ FROM (
           FROM (
             SELECT
               sessionId AS session_id,
+              MIN(SEC_TO_TIMESTAMP(hits.time)) AS sessionTimestamp,
               FIRST(trafficSource.source) AS source,
               FIRST(trafficSource.medium) AS medium,
               FIRST(trafficSource.campaign) AS campaign,
@@ -133,19 +135,26 @@ FROM (
               FIRST(geoNetwork.region) AS region,
             FROM
               TABLE_DATE_RANGE([delta-frame-184620:OWOXBI_Streaming.owoxbi_sessions_],
-                DATE_ADD(TIMESTAMP(TIMESTAMP('!DATE!')), -90, 'DAY'),
-                TIMESTAMP(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second')))
+                DATE_ADD(TIMESTAMP('!DATE!'), -90, 'DAY'),
+                DATE_ADD(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second'), 1, 'DAY'))
             GROUP EACH BY
-              session_id ) AS sessions
+              session_id
+            HAVING
+              sessionTimestamp BETWEEN DATE_ADD(TIMESTAMP('!DATE!'), -90, 'DAY')
+              AND DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second') ) AS sessions
           LEFT JOIN EACH (
             SELECT
               sessionId AS session_id,
+              MIN(SEC_TO_TIMESTAMP(hits.time)) AS sessionTimestamp,
             FROM
               TABLE_DATE_RANGE([delta-frame-184620:OWOXBI_Streaming.owoxbi_sessions_],
-                TIMESTAMP(TIMESTAMP('!DATE!')),
-                TIMESTAMP(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second')))
+                TIMESTAMP('!DATE!'),
+                DATE_ADD(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second'), 1, 'DAY'))
             GROUP EACH BY
-              session_id ) AS summary
+              session_id
+            HAVING
+              sessionTimestamp BETWEEN TIMESTAMP('!DATE!')
+              AND DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second') ) AS summary
           ON
             summary.session_id = sessions.session_id
           LEFT JOIN EACH (
@@ -192,8 +201,8 @@ FROM (
               SUM(trafficSource.attributedAdCost) AS cost
             FROM
               TABLE_DATE_RANGE([delta-frame-184620:OWOXBI_Streaming.owoxbi_sessions_],
-                TIMESTAMP(TIMESTAMP('!DATE!')),
-                TIMESTAMP(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second')))
+                TIMESTAMP('!DATE!'),
+                DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second'))
             GROUP EACH BY
               session_id ) AS costs
           ON
@@ -204,11 +213,7 @@ FROM (
             campaign,
             keyword,
             device,
-            region )
-        WHERE
-          cost>0
-          OR attributed_revenue IS NOT NULL
-          OR value IS NOT NULL ) ) AS t1
+            region ) ) ) AS t1
     FULL OUTER JOIN EACH (
       SELECT
         *
@@ -220,14 +225,14 @@ FROM (
           keyword,
           device,
           region,
-          value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online,
-          value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value,
-          SUM(_3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary,
-          SUM(_3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary,
           attributed_revenue_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online,
           attributed_revenue AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue,
           SUM(_3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_online_summary,
           SUM(_3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_attributed_revenue_summary,
+          value_online AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online,
+          value AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value,
+          SUM(_3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_online_summary,
+          SUM(_3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value) OVER() AS _3e5a63e1fd734d219440d7e8dc6ea3f6_attribution_value_summary,
           IFNULL(cost, 0) AS cost,
           SUM(cost) OVER() AS cost_summary,
           sessions_count,
@@ -252,6 +257,7 @@ FROM (
           FROM (
             SELECT
               sessionId AS session_id,
+              MIN(SEC_TO_TIMESTAMP(hits.time)) AS sessionTimestamp,
               FIRST(trafficSource.source) AS source,
               FIRST(trafficSource.medium) AS medium,
               FIRST(trafficSource.campaign) AS campaign,
@@ -260,19 +266,26 @@ FROM (
               FIRST(geoNetwork.region) AS region,
             FROM
               TABLE_DATE_RANGE([delta-frame-184620:OWOXBI_Streaming.owoxbi_sessions_],
-                DATE_ADD(TIMESTAMP(TIMESTAMP('!DATE!')), -90, 'DAY'),
-                TIMESTAMP(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second')))
+                DATE_ADD(TIMESTAMP('!DATE!'), -90, 'DAY'),
+                DATE_ADD(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second'), 1, 'DAY'))
             GROUP EACH BY
-              session_id ) AS sessions
+              session_id
+            HAVING
+              sessionTimestamp BETWEEN DATE_ADD(TIMESTAMP('!DATE!'), -90, 'DAY')
+              AND DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second') ) AS sessions
           LEFT JOIN EACH (
             SELECT
               sessionId AS session_id,
+              MIN(SEC_TO_TIMESTAMP(hits.time)) AS sessionTimestamp,
             FROM
               TABLE_DATE_RANGE([delta-frame-184620:OWOXBI_Streaming.owoxbi_sessions_],
-                TIMESTAMP(TIMESTAMP('!DATE!')),
-                TIMESTAMP(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second')))
+                TIMESTAMP('!DATE!'),
+                DATE_ADD(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second'), 1, 'DAY'))
             GROUP EACH BY
-              session_id ) AS summary
+              session_id
+            HAVING
+              sessionTimestamp BETWEEN TIMESTAMP('!DATE!')
+              AND DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second') ) AS summary
           ON
             summary.session_id = sessions.session_id
           LEFT JOIN EACH (
@@ -318,8 +331,8 @@ FROM (
               SUM(trafficSource.attributedAdCost) AS cost
             FROM
               TABLE_DATE_RANGE([delta-frame-184620:OWOXBI_Streaming.owoxbi_sessions_],
-                TIMESTAMP(TIMESTAMP('!DATE!')),
-                TIMESTAMP(DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second')))
+                TIMESTAMP('!DATE!'),
+                DATE_ADD(DATE_ADD(UTC_USEC_TO_DAY(TIMESTAMP('!DATE!')), 1, 'day'), -1, 'second'))
             GROUP EACH BY
               session_id ) AS costs
           ON
@@ -330,11 +343,7 @@ FROM (
             campaign,
             keyword,
             device,
-            region )
-        WHERE
-          cost>0
-          OR attributed_revenue IS NOT NULL
-          OR value IS NOT NULL ) ) AS t2
+            region ) ) ) AS t2
     ON
       t1.source = t2.source
       AND t1.medium = t2.medium
@@ -342,4 +351,3 @@ FROM (
       AND t1.keyword = t2.keyword
       AND t1.device = t2.device
       AND t1.region = t2.region ) )
-
