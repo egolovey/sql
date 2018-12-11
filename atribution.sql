@@ -1,4 +1,4 @@
--- !DATE! Funnel owoxbi sesions one day process
+-- !DATE! Funnel owoxbi sesions one day process 1
 SELECT
 '!DATE!' AS date,
   source,
